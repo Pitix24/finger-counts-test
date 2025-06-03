@@ -2,6 +2,7 @@ from flask import Flask, render_template, Response, jsonify
 import cv2
 from gesture_recognition import GestureRecognizer
 import threading
+import os
 
 app = Flask(__name__)
 cap = cv2.VideoCapture(0)
@@ -41,4 +42,8 @@ def finger_count():
     return jsonify(latest_hand_data)
 
 if __name__ == '__main__':
-    threading.Thread(target=lambda: app.run(debug=True, use_reloader=False)).start()
+    port = int(os.environ.get("PORT", 5000))
+    # Si quieres mantener el threading:
+    threading.Thread(target=lambda: app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)).start()
+    # O simplemente:
+    # app.run(host='0.0.0.0', port=port)
