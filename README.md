@@ -23,9 +23,11 @@ bash git clone https://github.com/tu_usuario/tu_repositorio.git cd tu_repositori
 2. **Crea y activa un entorno virtual:**
 
 bash python -m venv venv
-Windows:
+
+# Windows:
 venv\Scripts\activate
-Linux/Mac:
+
+# Linux/Mac:
 source venv/bin/activate
 
 3. **Instala las dependencias:**
