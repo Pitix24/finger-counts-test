@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detección de Dedos</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; }
+        video, img { border-radius: 12px; }
+        .count-box { margin-top: 20px; font-size: 1.5rem; }
+    </style>
+</head>
+<body>
+    <h1>Detección de Dedos en Tiempo Real</h1>
+    <img src="{{ url_for('video_feed') }}" width="640" height="480" alt="Video en vivo">
+    <div class="count-box">
+        <p><strong>Mano derecha:</strong> <span id="right">0</span> dedos</p>
+        <p><strong>Mano izquierda:</strong> <span id="left">0</span> dedos</p>
+        <p><strong>Total:</strong> <span id="total">0</span> dedos</p>
+    </div>
+
+    <script>
+        async function updateCount() {
+            try {
+                const res = await fetch('/finger_count');
+                const data = await res.json();
+                let right = 0, left = 0;
+
+                data.forEach(hand => {
+                    if (hand.label === 'Right') right = hand.fingers_up;
+                    else if (hand.label === 'Left') left = hand.fingers_up;
+                });
+
+                document.getElementById('right').textContent = right;
+                document.getElementById('left').textContent = left;
+                document.getElementById('total').textContent = right + left;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        setInterval(updateCount, 500); // actualizar cada 500 ms
+    </script>
+</body>
+</html>
