@@ -27,6 +27,7 @@ Windows:
 venv\Scripts\activate
 Linux/Mac:
 source venv/bin/activate
+
 3. **Instala las dependencias:**
 
 4. **Ejecuta la aplicación:**
